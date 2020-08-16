@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carte interactive de location de vélos</title>
+    <meta name="description" content="Envie de louer un vélo ? Trouvez celui qui est le plus proche de vous !" />
+
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+
+    <!-- OpenGraph-->
+    <meta property="og:title" content="Carte interactive de location de vélos" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://laurenceplatzer.com/P3-Carte-interactive/index.html" />
+    <meta property="og:image" content="https://laurenceplatzer.com/P3-Carte-interactive/images/Preview.png" />
+    <meta property="og:image:width" content="870" />
+    <meta property="og:image:height" content="390" />
+    <meta property="og:description" content="Envie de louer un vélo ? Trouvez celui qui est le plus proche de vous !" />
+
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="Carte interactive de location de vélos">
+    <meta name="twitter:title" content="Carte interactive de location de vélos">
+    <meta name="twitter:description" content="Envie de louer un vélo ? Trouvez celui qui est le plus proche de vous !">
+    <meta name="twitter:image:src" content="https://laurenceplatzer.com/P3-Carte-interactive/images/Preview.png">
+
+    <!-- Ajout de d'éléments de style : FontAwesome, police, CSS -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Martel+Sans" rel="stylesheet">
+    <!-- LEAFLET map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+
+
+
+
+    <link rel="stylesheet" href="js/Leaflet.markercluster-1.4.1/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css" />
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <header>
+        <h1><i class="fas fa-bicycle"></i> Vélo'V</h1>
+        <nav>
+            <div id="burger"><i class="fas fa-bars"></i>
+                    <ul id="dropDown">
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#fonctionnement">Fonctionnement</a></li>
+                        <li><a href="#carte">Carte</a></li>
+                        <li><a href="#">À&nbsp;propos</a></li>
+                    </ul>
+            </div>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#fonctionnement">Fonctionnement</a></li>
+                <li><a href="#carte">Carte</a></li>
+                <li><a href="#">À&nbsp;propos</a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <h2>Votre location de vélo à Lyon facilitée grâce à une carte interactive</h2>
+    <!-- Diaporama -->
+    <section class="presentationDeLaCarte">
+        <h3 id="fonctionnement"><i class="fas fa-tag"></i> Fonctionnement du service</h3>
+        <p>Vous avez besoin d'un vélo pour une course rapide ou pour une balade&nbsp;? Suivez le guide&nbsp;!</p>
+        <div class="diaporama" id="diaporama">
+            <figure> <img src="images/Diaporama/1.png" alt="image1">
+                <figcaption>
+                    <h3>Étape 1</h3>
+                    <p>Choisissez votre station sur la carte</p>
+                </figcaption>
+            </figure>
+
+            <figure> <img src="images/Diaporama/2.png" alt="image2">
+                <figcaption>
+                    <h3>Étape 2</h3>
+                    <p>Remplissez le formulaire et signez dans le cadre blanc</p>
+                </figcaption>
+            </figure>
+
+            <figure> <img src="images/Diaporama/3.png" alt="image3">
+                <figcaption>
+                    <h3>Étape 3</h3>
+                    <p>Cliquez sur "Réserver"</p>
+                </figcaption>
+            </figure>
+
+            <figure> <img src="images/Diaporama/4.png" alt="image4">
+                <figcaption>
+                    <h3>Étape 4</h3>
+                    <p>Vous recevez alors la confirmation que votre vélo est réservé</p>
+                </figcaption>
+            </figure>
+
+            <figure> <img src="images/Diaporama/5.png" alt="image5">
+                <figcaption>
+                    <h3>Étape 5</h3>
+                    <p>Récupérez votre vélo pendant le temps imparti, et voilà !</p>
+                </figcaption>
+            </figure>
+
+            <div id="buttons">
+                <i class="fas fa-angle-left flecheGauche"></i>
+                <i class="far fa-play-circle play"></i>
+                <i class="far fa-pause-circle pause"></i>
+                <i class="fas fa-angle-right flecheDroite"></i>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Carte et formulaire de réservation -->
+    <section id="mapAndBooking">
+        <h3 id="carte"><i class="far fa-compass"></i> Carte des vélos</h3>
+        <p>À vous !</p>
+
+        <div id="containerMapAndBooking">
+            <div id="newIdMap"></div>
+            <div id="booking">
+                <div id="displayBeforeClick">
+                    Cliquez sur une station de vélos pour obtenir plus d'informations.
+                </div>
+                <div id="stationInformations"></div>
+
+                <form id="bookingForm">
+                    <h3>Formulaire de réservation</h3>
+                    <p>
+                        <label for="name">Votre nom</label> :
+                        <input type="text" name="name" id="name" required>
+                    </p>
+
+                    <p> <label for="firstName">Votre prénom</label> :
+                        <input type="text" name="firstName" id="firstName" required>
+                    </p>
+
+                    <p> <span id="helpSign">Votre signature :</span> <br>
+                        <canvas id="canvas">
+                            La signature électronique se fait via l'élément <em>canvas</em>, mais il semble que votre
+                            navigateur ne le supporte pas :( <br>
+                            Veuillez réessayer en utilisant un autre navigateur.
+                        </canvas>
+                    </p>
+
+                    <input type="submit" value="Réserver" id="bookButton">
+                    <input type="reset" value="Annuler" id="cancelButton">
+                </form>
+
+                <div id="noBikeAvailable"><br />Il n'y a plus de vélo disponible à cette station.</div>
+                <div id="closedStation"><br />Cette station est malheureusement fermée, il n'est pas possible de
+                    réserver un vélo à cet endroit.</div>
+            </div>
+
+            <div id="availableTime">
+                <div id="currentTimeOnClick">
+                    <p>Nous sommes le <span id="currentDay"></span> à <span id="currentTime"></span>.</p>
+                </div>
+                <div id="bookingInformations">Votre vélo est réservé à la station <span id="nameStation"></span>
+                    jusqu'à <span id="maxTime"></span>.
+                    <p id="countdownTime"> Il vous reste <span id="countdown"></span> avant que votre
+                        réservation au nom de <span id="nameResa"></span> n'expire.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <ul>
+            <li><a href="#">À propos</a></li>
+            <li><a href="#">F.A.Q.</a></li>
+            <li><a href="#">Nous contacter</a></li>
+            <li><a href="#">Mentions légales</a></li>
+        </ul>
+    </footer>
+
+    <!-- Insertion du JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
+    <script src="js/Leaflet.markercluster-1.4.1/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
+
+    <script src="js/main.js"></script>
+    <script src="js/diaporama.js"></script>
+    <script src="js/ajax.js"></script>
+    <script src="js/carte.js"></script>
+    <script src="js/canvas.js"></script>
+    <script src="js/formulaire.js"></script>
+    <script src="js/reservation.js"></script>
+
+</body>
+
+</html>
